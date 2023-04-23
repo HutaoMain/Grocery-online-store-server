@@ -40,12 +40,24 @@ public class ProductController {
     }
 
     @GetMapping("/list")
-    List<Product> getAllProducts(){
+    List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
     @GetMapping("/bestProducts")
-    List<Product> getBest4Products(){
+    List<Product> getBest4Products() {
         return productService.getTopSoldProducts();
+    }
+
+    @GetMapping("/favoriteByEmail/{email}")
+    ResponseEntity<List<Optional<Product>>> getProductsByFavoriteFindByEmail(@PathVariable String email) {
+        List<Optional<Product>> productListFavoriteFindByEmail = productService.getProductsByFavoriteFindByEmail(email);
+        return ResponseEntity.ok(productListFavoriteFindByEmail);
+    }
+
+    @GetMapping("/specificProduct/{id}")
+    ResponseEntity<Optional<Product>> getProductById(@PathVariable String id){
+        Optional<Product> optionalProduct = productService.getProductById(id);
+        return ResponseEntity.ok(optionalProduct);
     }
 }

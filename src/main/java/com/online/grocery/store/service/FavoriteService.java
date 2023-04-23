@@ -21,24 +21,25 @@ public class FavoriteService {
     @Autowired
     ProductRepository productRepository;
 
-    public List<Favorite> getFavoriteByEmail(String email) {
-        return favoriteRepository.findByEmail(email);
-    }
-
     public Favorite addFavorite(Favorite favorite) {
         return favoriteRepository.save(favorite);
     }
 
-    public List<Product> getSpecificFavProductByEmail(String email) {
-        List<Favorite> favorite = favoriteRepository.findByEmail(email);
-        List<Product> productList = new ArrayList<>();
+//    public List<Product> getSpecificFavProductByEmail(String email) {
+//        List<Favorite> favorite = favoriteRepository.findByEmail(email);
+//        List<Product> productList = new ArrayList<>();
+//
+//        for (Favorite w : favorite) {
+//            Optional<Product> product = productRepository.findById(w.getProductId());
+//            product.ifPresent(productList::add);
+//        }
+//
+//        return productList;
+//    }
 
-        for (Favorite w : favorite) {
-            Optional<Product> product = productRepository.findById(w.getProductId());
-            product.ifPresent(productList::add);
-        }
-
-        return productList;
+    public Boolean isFavorite(String email, String productId) {
+        Favorite favorite = favoriteRepository.findByEmailAndProductId(email, productId);
+        return favorite != null;
     }
 
     @Transactional
@@ -46,4 +47,9 @@ public class FavoriteService {
         favoriteRepository.deleteByProductId(id);
         return null;
     }
+
+    public List<Favorite> getFavoriteByEmail(String email) {
+        return favoriteRepository.findByEmail(email);
+    }
+
 }

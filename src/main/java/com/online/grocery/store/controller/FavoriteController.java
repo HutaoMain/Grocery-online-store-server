@@ -19,11 +19,6 @@ public class FavoriteController {
     @Autowired
     FavoriteService favoriteService;
 
-    @GetMapping("/{email}")
-    ResponseEntity<List<Favorite>> getFavoriteByEmail(@PathVariable String email) {
-        List<Favorite> favoriteList = favoriteService.getFavoriteByEmail(email);
-        return ResponseEntity.ok(favoriteList);
-    }
 
     @PostMapping("/create")
     public ResponseEntity<?> createFavorite(@RequestBody Favorite favorite) {
@@ -31,14 +26,19 @@ public class FavoriteController {
         if (createFavorite != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body(createFavorite);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error creating wishlist");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error adding favorite");
         }
     }
 
-    @GetMapping("/product/{email}")
-    public ResponseEntity<List<Product>> getSpecificFavProductByEmail(@PathVariable String email) {
-        List<Product> favoriteServiceSpecificFavProductByEmail = favoriteService.getSpecificFavProductByEmail(email);
-        return ResponseEntity.ok(favoriteServiceSpecificFavProductByEmail);
+//    @GetMapping("/product/{email}")
+//    public ResponseEntity<List<Product>> getSpecificFavProductByEmail(@PathVariable String email) {
+//        List<Product> favoriteServiceSpecificFavProductByEmail = favoriteService.getSpecificFavProductByEmail(email);
+//        return ResponseEntity.ok(favoriteServiceSpecificFavProductByEmail);
+//    }
+
+    @GetMapping("/isFavorite/{email}/{productId}")
+    public boolean isFavorite(@PathVariable String email, @PathVariable String productId) {
+        return favoriteService.isFavorite(email, productId);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -46,4 +46,11 @@ public class FavoriteController {
         Favorite deleteFavoriteList = favoriteService.deleteFavoriteList(id);
         return ResponseEntity.ok(deleteFavoriteList);
     }
+
+    @GetMapping("/{email}")
+    ResponseEntity<List<Favorite>> getFavoriteByEmail(@PathVariable String email) {
+        List<Favorite> favoriteList = favoriteService.getFavoriteByEmail(email);
+        return ResponseEntity.ok(favoriteList);
+    }
+
 }
