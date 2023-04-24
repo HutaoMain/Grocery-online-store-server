@@ -34,7 +34,7 @@ public class OrderService {
         order.setStatus(orderDto.getStatus());
         order.setEmail(orderDto.getEmail());
         order.setUserFullName(orderDto.getUserFullName());
-        order.setOrderJsonList(orderDto.getOrderJsonList());
+        order.setOrderList(orderDto.getOrderList());
         order.setBarangay(orderDto.getBarangay());
         order.setMunicipality(orderDto.getMunicipality());
         order.setStreet(orderDto.getStreet());

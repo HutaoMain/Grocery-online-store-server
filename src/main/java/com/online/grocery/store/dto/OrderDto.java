@@ -17,7 +17,7 @@ public class OrderDto {
 
     private Double totalPrice;
 
-    private String orderJsonList;
+    private String orderList;
 
     private String status;
 

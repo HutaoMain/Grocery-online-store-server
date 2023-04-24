@@ -19,7 +19,7 @@ public class Order {
 
     private Double totalPrice;
 
-    private String orderJsonList;
+    private String orderList;
 
     private String status;
 
