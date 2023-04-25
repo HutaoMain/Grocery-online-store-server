@@ -74,4 +74,8 @@ public class OrderService {
             }
         }
     }
+
+    public List<Order> getOrderByEmail(String email){
+        return orderRepository.findByEmail(email);
+    }
 }
