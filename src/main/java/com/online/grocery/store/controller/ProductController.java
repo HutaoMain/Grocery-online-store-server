@@ -40,8 +40,12 @@ public class ProductController {
     }
 
     @GetMapping("/list")
-    List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    List<Product> getAllProducts(@RequestParam(name = "category", required = false) Category category) {
+        if (category != null) {
+            return productService.getProductsByCategory(category);
+        } else {
+            return productService.getAllProducts();
+        }
     }
 
     @GetMapping("/bestProducts")
@@ -56,7 +60,7 @@ public class ProductController {
     }
 
     @GetMapping("/specificProduct/{id}")
-    ResponseEntity<Optional<Product>> getProductById(@PathVariable String id){
+    ResponseEntity<Optional<Product>> getProductById(@PathVariable String id) {
         Optional<Product> optionalProduct = productService.getProductById(id);
         return ResponseEntity.ok(optionalProduct);
     }
