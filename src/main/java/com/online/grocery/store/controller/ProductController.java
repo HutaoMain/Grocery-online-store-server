@@ -26,7 +26,7 @@ public class ProductController {
     @PostMapping("/create")
     public ResponseEntity<String> createProduct(@RequestBody ProductDto productDTO) {
         Optional<Category> optionalCategories = categoryRepository.findById(productDTO.getCategoryId());
-        if (optionalCategories.isEmpty()) {
+        if (!optionalCategories.isPresent()) {
             return ResponseEntity.ok("category does not exist");
         } else {
             productService.createProduct(productDTO, optionalCategories.get());
