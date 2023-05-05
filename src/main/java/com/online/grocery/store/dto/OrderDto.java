@@ -34,4 +34,6 @@ public class OrderDto {
     private Integer contactNumber;
 
     private List<ProductQuantityDto> products;
+
+    private String paymentMethod;
 }

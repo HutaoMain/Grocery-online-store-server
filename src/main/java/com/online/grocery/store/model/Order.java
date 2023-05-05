@@ -34,4 +34,8 @@ public class Order {
     private String city;
 
     private Integer contactNumber;
+
+    private String paymentMethod;
+
+    private String receipt;
 }

@@ -23,7 +23,7 @@ public class OrderService {
     @Autowired
     ProductRepository productRepository;
 
-    public List<Order> getAllOrder(){
+    public List<Order> getAllOrder() {
         return orderRepository.findAll();
     }
 
@@ -41,6 +41,7 @@ public class OrderService {
         order.setContactNumber(orderDto.getContactNumber());
         order.setCity(orderDto.getCity());
         order.setPostalCode(orderDto.getPostalCode());
+        order.setPaymentMethod(orderDto.getPaymentMethod());
 
         List<ProductQuantityDto> productQuantities = orderDto.getProducts();
         subtractProductsFromInventory(productQuantities);
@@ -75,7 +76,15 @@ public class OrderService {
         }
     }
 
-    public List<Order> getOrderByEmail(String email){
+    public List<Order> getOrderByEmail(String email) {
         return orderRepository.findByEmail(email);
+    }
+
+    public void uploadReceipt(String orderId, Order getOrder) {
+        Order setOrder = orderRepository.findById(orderId).orElse(null);
+        if (setOrder != null) {
+            setOrder.setReceipt(getOrder.getReceipt());
+            orderRepository.save(setOrder);
+        }
     }
 }

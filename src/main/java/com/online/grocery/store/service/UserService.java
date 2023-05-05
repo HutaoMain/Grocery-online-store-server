@@ -21,11 +21,4 @@ public class UserService {
         return userRepository.findAll();
     }
 
-//    public void updateAddress(String email, User user) {
-//        User setUser = userRepository.findByEmail(email);
-//        setUser.setAddress(user.getAddress());
-//        setUser.setCity(user.getCity());
-//        setUser.setPostalCode(user.getPostalCode());
-//        userRepository.save(setUser);
-//    }
 }

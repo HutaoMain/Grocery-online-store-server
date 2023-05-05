@@ -25,12 +25,4 @@ public class UserController {
     private User getUserByEmail(@PathVariable("email") String email) {
         return userService.getUserByEmail(email);
     }
-
-
-//    @PutMapping("/changeAddress/{email}")
-//    public ResponseEntity<String> updateAddress(@PathVariable("email") String email, @RequestBody User user) {
-//        userService.updateAddress(email, user);
-//        return new ResponseEntity<>("Password updated successfully", HttpStatus.OK);
-//    }
-
 }

@@ -29,4 +29,10 @@ public class OrderController {
         return ResponseEntity.ok(orderList);
     }
 
+    @PutMapping(value = "/uploadReceipt/{id}")
+    public ResponseEntity<String> uploadReceipt(@PathVariable String id, @RequestBody Order order) {
+        orderService.uploadReceipt(id, order);
+        return ResponseEntity.ok("successfully upload receipt!");
+    }
+
 }
