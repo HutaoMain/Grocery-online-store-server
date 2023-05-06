@@ -34,7 +34,6 @@ public class CategoryService {
         return categoryRepository.findById(id);
     }
 
-
     public List<CategorySoldDto> getTopCategoriesBySold() {
         Aggregation aggregation = Aggregation.newAggregation(
                 Aggregation.group("category").sum("sold").as("totalSold"),
@@ -44,6 +43,10 @@ public class CategoryService {
         );
         AggregationResults<CategorySoldDto> results = mongoTemplate.aggregate(aggregation, "products", CategorySoldDto.class);
         return results.getMappedResults();
+    }
+
+    public void deleteCategory(String categoryId) {
+        categoryRepository.deleteById(categoryId);
     }
 
 }

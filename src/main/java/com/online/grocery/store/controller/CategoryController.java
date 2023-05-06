@@ -41,4 +41,10 @@ public class CategoryController {
         List<CategorySoldDto> categorySoldDtoList = categoryService.getTopCategoriesBySold();
         return ResponseEntity.ok(categorySoldDtoList);
     }
+
+    @DeleteMapping("/delete/{categoryId}")
+    private String deleteCategory(@PathVariable("categoryId") String categoryId) {
+        categoryService.deleteCategory(categoryId);
+        return "category deleted";
+    }
 }
