@@ -64,4 +64,10 @@ public class ProductController {
         Optional<Product> optionalProduct = productService.getProductById(id);
         return ResponseEntity.ok(optionalProduct);
     }
+
+    @DeleteMapping("/delete/{productId}")
+    private String deleteProductById(@PathVariable("productId") String productId) {
+        productService.deleteProductById(productId);
+        return "product deleted";
+    }
 }

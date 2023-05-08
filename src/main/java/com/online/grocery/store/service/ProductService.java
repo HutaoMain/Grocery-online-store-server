@@ -65,4 +65,8 @@ public class ProductService {
     public Optional<Product> getProductById(String id){
         return productRepository.findById(id);
     }
+
+    public void deleteProductById(String productId){
+        productRepository.deleteById(productId);
+    }
 }
