@@ -47,4 +47,10 @@ public class CategoryController {
         categoryService.deleteCategory(categoryId);
         return "category deleted";
     }
+
+    @PutMapping("/update/{id}")
+    private Category updateCategory(@PathVariable("id") String id, @RequestBody Category category) {
+        categoryService.updateCategory(id, category);
+        return category;
+    }
 }

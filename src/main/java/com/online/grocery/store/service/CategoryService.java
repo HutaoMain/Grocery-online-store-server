@@ -30,7 +30,7 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public Optional<Category> getCategoryById(String id){
+    public Optional<Category> getCategoryById(String id) {
         return categoryRepository.findById(id);
     }
 
@@ -47,6 +47,15 @@ public class CategoryService {
 
     public void deleteCategory(String categoryId) {
         categoryRepository.deleteById(categoryId);
+    }
+
+    public void updateCategory(String id, Category category) {
+        Category setCategory = categoryRepository.findById(id).orElse(null);
+        if (setCategory != null) {
+            setCategory.setCategoryName(category.getCategoryName());
+            setCategory.setImageUrl(category.getImageUrl());
+            categoryRepository.save(setCategory);
+        }
     }
 
 }
