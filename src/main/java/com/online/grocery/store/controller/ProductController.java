@@ -70,4 +70,10 @@ public class ProductController {
         productService.deleteProductById(productId);
         return "product deleted";
     }
+
+    @PutMapping("/update/{id}")
+    private ResponseEntity<Product> updateProduct(@PathVariable String id, @RequestBody Product product){
+         Product products = productService.updateProduct(id, product);
+        return ResponseEntity.ok(products);
+    }
 }

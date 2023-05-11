@@ -69,4 +69,19 @@ public class ProductService {
     public void deleteProductById(String productId){
         productRepository.deleteById(productId);
     }
+
+    public Product updateProduct(String id, Product product){
+        Product setProduct = productRepository.findById(id).orElse(null);
+        if(setProduct != null){
+            setProduct.setProductName(product.getProductName());
+            setProduct.setImageUrl(product.getImageUrl());
+            setProduct.setDescription(product.getDescription());
+            setProduct.setPrice(product.getPrice());
+            setProduct.setQuantity(product.getQuantity());
+            setProduct.setCategory(product.getCategory());
+            productRepository.save(setProduct);
+        }
+
+        return setProduct;
+    }
 }
