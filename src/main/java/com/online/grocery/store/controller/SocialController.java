@@ -24,6 +24,9 @@ public class SocialController {
     @Value("${client.url}")
     private String CLIENT_URL;
 
+    @Value("${admin.url}")
+    private String ADMIN_URL;
+
     @Autowired
     UserRepository userRepository;
 
@@ -45,11 +48,13 @@ public class SocialController {
             @SuppressWarnings("unchecked")
             Map<String, Object> data = (Map<String, Object>) picture.get("data");
             pictureUrl = (String) data.get("url");
-        } else  {
+        } else {
             pictureUrl = (String) attributes.get("picture");
         }
 
         boolean emailExists = userRepository.existsByEmail(email);
+        User findByEmail = userRepository.findByEmail(email);
+
         if (emailExists) {
             log.info("User with email {} already exists in the database, skipping save", email);
         } else {
@@ -63,7 +68,12 @@ public class SocialController {
             log.info("User saved to database with email {}", email);
         }
 
-        String redirectUrl = CLIENT_URL + "?email=" + email;
+        String redirectUrl;
+        if (findByEmail.getUserRole().equals("ROLE_ADMIN")) {
+            redirectUrl = ADMIN_URL + "?email=" + email;
+        } else {
+            redirectUrl = CLIENT_URL + "?email=" + email;
+        }
         response.sendRedirect(redirectUrl);
 
         return attributes;
