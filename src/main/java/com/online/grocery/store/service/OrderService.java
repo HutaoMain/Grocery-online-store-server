@@ -87,4 +87,16 @@ public class OrderService {
             orderRepository.save(setOrder);
         }
     }
+
+    public void updateOrderStatus(String id, Order order) {
+        Order setOrder = orderRepository.findById(id).orElse(null);
+        if (setOrder != null) {
+            setOrder.setStatus(order.getStatus());
+            orderRepository.save(setOrder);
+        }
+    }
+
+    public Order getOrderById(String id) {
+        return orderRepository.findById(id).orElse(null);
+    }
 }

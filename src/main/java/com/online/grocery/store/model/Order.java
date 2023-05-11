@@ -23,6 +23,8 @@ public class Order {
 
     private String status;
 
+//
+
     private String street;
 
     private String barangay;
@@ -34,6 +36,8 @@ public class Order {
     private String city;
 
     private Integer contactNumber;
+
+//
 
     private String paymentMethod;
 

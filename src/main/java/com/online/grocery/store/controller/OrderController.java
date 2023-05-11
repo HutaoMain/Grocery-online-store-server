@@ -29,10 +29,27 @@ public class OrderController {
         return ResponseEntity.ok(orderList);
     }
 
+    @GetMapping("/list")
+    ResponseEntity<List<Order>> getOrderList() {
+        List<Order> orderList = orderService.getAllOrder();
+        return ResponseEntity.ok(orderList);
+    }
+
     @PutMapping(value = "/uploadReceipt/{id}")
     public ResponseEntity<String> uploadReceipt(@PathVariable String id, @RequestBody Order order) {
         orderService.uploadReceipt(id, order);
         return ResponseEntity.ok("successfully upload receipt!");
     }
 
+    @PutMapping(value = "/updateStatus/{id}")
+    public ResponseEntity<String> updateOrderStatus(@PathVariable String id, @RequestBody Order order) {
+        orderService.updateOrderStatus(id, order);
+        return ResponseEntity.ok("successfully upload receipt!");
+    }
+
+    @GetMapping(value = "/list/{id}")
+    public ResponseEntity<Order> getOrderById(@PathVariable String id) {
+        Order order = orderService.getOrderById(id);
+        return ResponseEntity.ok(order);
+    }
 }
