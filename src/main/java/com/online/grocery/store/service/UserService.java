@@ -21,4 +21,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User updateUserRole(String id, User user){
+        User setUser = userRepository.findById(id).orElse(null);
+        if(setUser != null){
+            setUser.setUserRole(user.getUserRole());
+            userRepository.save(setUser);
+        }
+        return setUser;
+    }
+
 }

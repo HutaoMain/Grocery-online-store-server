@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class SocialController {
     UserRepository userRepository;
 
     @GetMapping
-    public Map<String, Object> currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken, HttpServletResponse response) throws IOException {
+    public Map<String, Object> currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         Map<String, Object> attributes = oAuth2AuthenticationToken.getPrincipal().getAttributes();
 
@@ -69,7 +70,10 @@ public class SocialController {
         }
 
         String redirectUrl;
-        if (findByEmail.getUserRole().equals("ROLE_ADMIN")) {
+
+        String referer = request.getHeader("Referer");
+
+        if (referer != null && referer.startsWith(ADMIN_URL)) {
             redirectUrl = ADMIN_URL + "?email=" + email;
         } else {
             redirectUrl = CLIENT_URL + "?email=" + email;

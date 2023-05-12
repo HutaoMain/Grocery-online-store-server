@@ -3,6 +3,7 @@ package com.online.grocery.store.controller;
 import com.online.grocery.store.model.User;
 import com.online.grocery.store.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,5 +25,11 @@ public class UserController {
     @GetMapping("/{email}")
     private User getUserByEmail(@PathVariable("email") String email) {
         return userService.getUserByEmail(email);
+    }
+
+    @PutMapping("/userRole/{id}")
+    private ResponseEntity<User> updateUserRoleById(@PathVariable String id, @RequestBody User user){
+        User resUser = userService.updateUserRole(id, user);
+        return ResponseEntity.ok(resUser);
     }
 }
