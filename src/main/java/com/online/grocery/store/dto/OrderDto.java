@@ -3,6 +3,7 @@ package com.online.grocery.store.dto;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -36,4 +37,6 @@ public class OrderDto {
     private List<ProductQuantityDto> products;
 
     private String paymentMethod;
+
+    private LocalDateTime orderDate;
 }

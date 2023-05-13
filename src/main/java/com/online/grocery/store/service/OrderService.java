@@ -10,8 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -42,6 +41,7 @@ public class OrderService {
         order.setCity(orderDto.getCity());
         order.setPostalCode(orderDto.getPostalCode());
         order.setPaymentMethod(orderDto.getPaymentMethod());
+        order.setOrderDate(orderDto.getOrderDate());
 
         List<ProductQuantityDto> productQuantities = orderDto.getProducts();
         subtractProductsFromInventory(productQuantities);
@@ -98,5 +98,24 @@ public class OrderService {
 
     public Order getOrderById(String id) {
         return orderRepository.findById(id).orElse(null);
+    }
+
+    public double getTotalPriceByStatus() {
+        String status = "Delivered";
+        List<Order> orders = orderRepository.findByStatus(status);
+        return orders.stream().mapToDouble(Order::getTotalPrice).sum();
+    }
+
+    public Map<String, Double> getTotalPriceGroupedByMonth() {
+        List<Object[]> results = orderRepository.findTotalPriceGroupedByMonth(Arrays.asList("Pending", "Delivered", "Cancelled"));
+        Map<String, Double> totalPriceByMonth = new HashMap<>();
+
+        for (Object[] row : results) {
+            int month = (int) row[0];
+            double totalPrice = (double) row[1];
+            totalPriceByMonth.put(String.format("%02d", month), totalPrice);
+        }
+
+        return totalPriceByMonth;
     }
 }

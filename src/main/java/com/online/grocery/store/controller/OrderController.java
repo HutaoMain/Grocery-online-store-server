@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/order")
@@ -51,5 +52,15 @@ public class OrderController {
     public ResponseEntity<Order> getOrderById(@PathVariable String id) {
         Order order = orderService.getOrderById(id);
         return ResponseEntity.ok(order);
+    }
+
+    @GetMapping("/total-price")
+    public double getTotalPriceByStatus() {
+        return orderService.getTotalPriceByStatus();
+    }
+
+    @GetMapping("/total-price-by-month")
+    public Map<String, Double> getTotalPriceByMonth() {
+        return orderService.getTotalPriceGroupedByMonth();
     }
 }
