@@ -59,8 +59,8 @@ public class OrderController {
         return orderService.getTotalPriceByStatus();
     }
 
-    @GetMapping("/total-price-by-month")
-    public Map<String, Double> getTotalPriceByMonth() {
-        return orderService.getTotalPriceGroupedByMonth();
+    @GetMapping("/total-sales-per-month")
+    List<Map<String, Object>> getTotalSalesPerMonth() {
+        return orderService.getTotalSalesPerMonth();
     }
 }

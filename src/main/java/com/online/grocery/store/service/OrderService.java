@@ -10,7 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -106,16 +109,21 @@ public class OrderService {
         return orders.stream().mapToDouble(Order::getTotalPrice).sum();
     }
 
-    public Map<String, Double> getTotalPriceGroupedByMonth() {
-        List<Object[]> results = orderRepository.findTotalPriceGroupedByMonth(Arrays.asList("Pending", "Delivered", "Cancelled"));
-        Map<String, Double> totalPriceByMonth = new HashMap<>();
-
-        for (Object[] row : results) {
-            int month = (int) row[0];
-            double totalPrice = (double) row[1];
-            totalPriceByMonth.put(String.format("%02d", month), totalPrice);
-        }
-
-        return totalPriceByMonth;
+    public List<Map<String, Object>> getTotalSalesPerMonth() {
+        List<Order> deliveredOrders = orderRepository.findByStatus("Delivered");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM");
+        return deliveredOrders.stream()
+                .collect(Collectors.groupingBy(
+                        order -> order.getOrderDate().format(formatter),
+                        Collectors.summingDouble(Order::getTotalPrice)
+                ))
+                .entrySet().stream()
+                .map(entry -> {
+                    Map<String, Object> result = new HashMap<>();
+                    result.put("orderDate", entry.getKey());
+                    result.put("totalPrice", entry.getValue());
+                    return result;
+                })
+                .collect(Collectors.toList());
     }
 }
