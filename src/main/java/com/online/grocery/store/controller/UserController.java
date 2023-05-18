@@ -32,4 +32,10 @@ public class UserController {
         User resUser = userService.updateUserRole(id, user);
         return ResponseEntity.ok(resUser);
     }
+
+    @PutMapping("/changeShippingAddress/{email}")
+    public ResponseEntity<User> updateAddress(@PathVariable("email") String email, @RequestBody User user) {
+        User updateUserAddress = userService.updateShippingAddress(email, user);
+        return ResponseEntity.ok(updateUserAddress);
+    }
 }

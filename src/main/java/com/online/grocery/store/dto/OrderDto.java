@@ -22,18 +22,6 @@ public class OrderDto {
 
     private String status;
 
-    private String street;
-
-    private String barangay;
-
-    private String postalCode;
-
-    private String municipality;
-
-    private String city;
-
-    private Integer contactNumber;
-
     private List<ProductQuantityDto> products;
 
     private String paymentMethod;

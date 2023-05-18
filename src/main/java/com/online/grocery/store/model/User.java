@@ -32,7 +32,7 @@ public class User {
 
     private String city;
 
-    private Integer contactNumber;
+    private String contactNumber;
 
     List<Order> order;
 }

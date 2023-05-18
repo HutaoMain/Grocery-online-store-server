@@ -30,4 +30,14 @@ public class UserService {
         return setUser;
     }
 
+    public User updateShippingAddress(String email, User user) {
+        User setUser = userRepository.findByEmail(email);
+        setUser.setStreet(user.getStreet());
+        setUser.setBarangay(user.getBarangay());
+        setUser.setPostalCode(user.getPostalCode());
+        setUser.setMunicipality(user.getMunicipality());
+        setUser.setCity(user.getCity());
+        setUser.setContactNumber(user.getContactNumber());
+        return userRepository.save(setUser);
+    }
 }

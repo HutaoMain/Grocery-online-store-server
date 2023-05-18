@@ -26,22 +26,6 @@ public class Order {
 
     private String status;
 
-//
-
-    private String street;
-
-    private String barangay;
-
-    private String postalCode;
-
-    private String municipality;
-
-    private String city;
-
-    private Integer contactNumber;
-
-//
-
     private String paymentMethod;
 
     private String receipt;
