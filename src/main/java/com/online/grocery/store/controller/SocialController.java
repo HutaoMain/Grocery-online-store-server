@@ -54,7 +54,7 @@ public class SocialController {
         }
 
         boolean emailExists = userRepository.existsByEmail(email);
-        User findByEmail = userRepository.findByEmail(email);
+        User findUserByEmail = userRepository.findByEmail(email);
 
         if (emailExists) {
             log.info("User with email {} already exists in the database, skipping save", email);
@@ -69,18 +69,18 @@ public class SocialController {
             log.info("User saved to database with email {}", email);
         }
 
-        String redirectUrl;
-
         String referer = request.getHeader("Referer");
 
-        if (referer != null && referer.startsWith(ADMIN_URL)) {
+        String redirectUrl;
+
+        if (findUserByEmail.getUserRole().equals("ROLE_ADMIN") || findUserByEmail.getUserRole().equals("ROLE_STAFF") || referer != null && referer.startsWith(ADMIN_URL)) {
             redirectUrl = ADMIN_URL + "?email=" + email;
         } else {
             redirectUrl = CLIENT_URL + "?email=" + email;
         }
+
         response.sendRedirect(redirectUrl);
 
         return attributes;
-
     }
 }
